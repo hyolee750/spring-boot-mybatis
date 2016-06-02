@@ -1,0 +1,27 @@
+<mapper namespace="com.hyolee.user.mapper.UserMapper">
+
+    <insert id="save" parameterType="User">
+        INSERT INTO "user"(username, phone, email, birthday)
+        VALUES (#{username},#{phone},#{email},#{birthday})
+    </insert>
+
+    <update id="update" parameterType="User">
+        UPDATE "user" SET
+        username=#{username},
+        phone=#{phone},
+        email=#{email},
+        birthday=#{birthday}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM "user" WHERE id=#{id}
+    </delete>
+
+    <select id="findById" parameterType="int" resultType="User">
+        SELECT * FROM "user" WHERE id=#{id}
+    </select>
+    <select id="getAll" resultType="User">
+        SELECT * FROM "user"
+    </select>
+</mapper>

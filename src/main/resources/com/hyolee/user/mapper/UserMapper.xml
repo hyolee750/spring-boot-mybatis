@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyolee.user.mapper.UserMapper">
+
+    <insert id="save" parameterType="com.hyolee.user.domain.User">
+      <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+          SELECT LAST_INSERT_ID()
+      </selectKey>
+        INSERT INTO user(username, phone, email, birthday)
+        VALUES (#{username},#{phone},#{email},#{birthday})
+    </insert>
+
+    <update id="update" parameterType="com.hyolee.user.domain.User">
+        UPDATE user SET
+        username=#{username},
+        phone=#{phone},
+        email=#{email},
+        birthday=#{birthday}
+        WHERE id=#{id}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM user WHERE id=#{id}
+    </delete>
+
+    <select id="findById" parameterType="int" resultType="com.hyolee.user.domain.User">
+        SELECT * FROM user WHERE id=#{id}
+    </select>
+    <select id="getAll" resultType="User">
+    SELECT * FROM user
+  </select>
+</mapper>
