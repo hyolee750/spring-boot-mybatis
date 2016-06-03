@@ -1,5 +1,7 @@
 package com.hyolee.user.service;
 
+import com.hyolee.user.domain.Page;
+import com.hyolee.user.domain.QueryVo;
 import com.hyolee.user.domain.User;
 //import com.hyolee.user.mapper.UserMapper;
 import com.hyolee.user.mapper.UserMapper;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/6/2.
@@ -37,5 +40,14 @@ public class UserService {
 
     public void update(User user) {
         userMapper.update(user);
+    }
+
+    public Page<User> getUserPage(QueryVo vo){
+        Integer total = userMapper.getUserTotal(vo);
+        Page<User> page = new Page<User>(vo.getPageNum(),total,vo.getPageSize(),vo.getDisplay());
+        vo.setStartIndex(page.getStartIndex());
+        List<User> list = userMapper.getUserPage(vo);
+        page.setList(list);
+        return page;
     }
 }

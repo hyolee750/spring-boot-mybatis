@@ -1,5 +1,12 @@
 package com.hyolee.user.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.hyolee.user.utils.JsonDateDeserializer;
+import com.hyolee.user.utils.JsonDateSerializer;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Past;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,9 +16,15 @@ import java.util.Date;
 public class User implements Serializable {
 
     private Integer id;
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String phone;
+    @NotEmpty
     private String email;
+    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonDeserialize(using = JsonDateDeserializer.class)
+    @Past
     private Date birthday;
 
     public Integer getId() {

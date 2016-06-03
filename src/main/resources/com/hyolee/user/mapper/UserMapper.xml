@@ -30,4 +30,23 @@
     <select id="getAll" resultType="User">
     SELECT * FROM user
   </select>
+    <select id="getUserTotal" parameterType="QueryVo" resultType="java.lang.Integer">
+        SELECT count(*) FROM user
+        <where>
+            <if test="username != null and username != ''">username LIKE '%${username}%'</if>
+            <if test="phone != null and phone != ''">AND phone = #{phone}</if>
+            <if test="email != null and email != ''">AND email = #{email}</if>
+            <if test="birthday != null">AND DATE(birthday) = #{birthday}</if>
+        </where>
+    </select>
+    <select id="getUserPage" parameterType="QueryVo" resultType="com.hyolee.user.domain.User">
+        SELECT * FROM user
+        <where>
+            <if test="username != null and username != ''">username LIKE '%${username}%'</if>
+            <if test="phone != null and phone != ''">AND phone = #{phone}</if>
+            <if test="email != null and email != ''">AND email = #{email}</if>
+            <if test="birthday != null">AND DATE(birthday) = #{birthday}</if>
+        </where>
+        LIMIT #{startIndex},#{pageSize}
+    </select>
 </mapper>
